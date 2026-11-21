@@ -247,7 +247,7 @@ public class Controlador {
 
     // Modo trampa en la terminal: elegir tamagotchi, estadística y valor
     private void modoTrampa() {
-        int m = vista.elegirDeLista("MODO TRAMPA ---> a cual tamagotchi?", nombresMascotas());
+        int m = vista.elegirDeLista("MODO TRAMPA a cual tamagotchi?", nombresMascotas());
         if (m < 1 || m > coleccion.tamano()) {
             return;
         }

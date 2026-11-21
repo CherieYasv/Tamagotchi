@@ -74,12 +74,12 @@ public class VistaConsola {
         System.out.println("6. Esperar un rato");
 
         System.out.println();
-        System.out.println("---- Tus tamagotchis (> es el que estás usando) ----");
+        System.out.println("---- Tus tamagotchis  ----");
         for (int i = 0; i < coleccion.tamano(); i++) {
             Tamagotchi m = coleccion.obtener(i);
             String marca = "   ";
             if (m == activo) {
-                marca = " > ";
+                marca = "---> ";
             }
             System.out.println(marca + m.getNombre() + " (" + m.getTipo() + ") - " + m.getAnimo());
         }
