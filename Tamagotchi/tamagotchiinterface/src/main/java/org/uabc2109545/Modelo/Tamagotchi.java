@@ -139,8 +139,9 @@ public abstract class Tamagotchi implements TamagotchiActions {
         return salud <= 0;
     }
 
-    // Texto con el estado actual. Las subclases agregan sus cosas
-    public String getEstado() {
+    // toString con lo que todos los tamagotchis tienen. Las subclases agregan lo suyo
+    @Override
+    public String toString() {
         String durmiendo = "no";
         if (dormido) {
             durmiendo = "sí";

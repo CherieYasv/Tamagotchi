@@ -214,10 +214,10 @@ public class Serpiente extends Tamagotchi {
         return nombre + " sisea levemente, está contento.";
     }
 
-    // Agrega cascabel y calor al estado
+    // toString que suma lo de la clase padre con lo de la clase hija
     @Override
-    public String getEstado() {
-        return super.getEstado() + "\n"
+    public String toString() {
+        return super.toString() + "\n"
                 + "Ganas de sonar el cascabel: " + nivel(cascabel) + "\n"
                 + "Ganas de tomar el sol: " + nivel(calor);
     }

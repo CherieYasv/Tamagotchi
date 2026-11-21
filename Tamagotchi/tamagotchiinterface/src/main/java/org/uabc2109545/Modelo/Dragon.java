@@ -214,10 +214,10 @@ public class Dragon extends Tamagotchi {
         return nombre + " mueve la cola contento, todo está bien.";
     }
 
-    // Agrega vuelo y enojo al estado
+    // toString que suma lo de la clase padre con lo de la clase hija
     @Override
-    public String getEstado() {
-        return super.getEstado() + "\n"
+    public String toString() {
+        return super.toString() + "\n"
                 + "Ganas de volar: " + nivel(vuelo) + "\n"
                 + "Enojo: " + nivel(enojo);
     }

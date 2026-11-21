@@ -1,7 +1,6 @@
 package org.uabc2109545.Controlador;
 
-import java.util.ArrayList;
-
+import org.uabc2109545.Modelo.Coleccion;
 import org.uabc2109545.Modelo.Dragon;
 import org.uabc2109545.Modelo.Pulpo;
 import org.uabc2109545.Modelo.Serpiente;
@@ -10,7 +9,7 @@ import org.uabc2109545.Vista.VistaConsola;
 
 public class Controlador {
     private VistaConsola vista;
-    private ArrayList<Tamagotchi> mascotas = new ArrayList<>();
+    private Coleccion coleccion = new Coleccion();
     private Tamagotchi activo;     // <-- El tamagotchi que se esta usando en este momento
     private boolean salir = false;
 
@@ -23,8 +22,8 @@ public class Controlador {
         this.vista = vista;
     }
 
-    public ArrayList<Tamagotchi> getMascotas() {
-        return mascotas;
+    public Coleccion getColeccion() {
+        return coleccion;
     }
 
     public Tamagotchi getActivo() {
@@ -33,8 +32,8 @@ public class Controlador {
 
     // Aqui se cmbia el tamagotchi que se está usando
     public void setActivo(int posicionTamagotchi) {
-        if (posicionTamagotchi >= 0 && posicionTamagotchi < mascotas.size()) {
-            activo = mascotas.get(posicionTamagotchi);
+        if (posicionTamagotchi >= 0 && posicionTamagotchi < coleccion.tamano()) {
+            activo = coleccion.obtener(posicionTamagotchi);
         }
     }
 
@@ -62,7 +61,7 @@ public class Controlador {
             default:
                 return false;
         }
-        mascotas.add(nuevo);
+        coleccion.agregar(nuevo);
         activo = nuevo;
         return true;
     }
@@ -115,34 +114,27 @@ public class Controlador {
 
     // Pasa el tiempo para todos por igual. Manda un mensaje que alguien murio
     public String pasarTiempo() {
-        mascotas.forEach(m -> m.pasarTiempo());
+        coleccion.pasarTiempo();
         return revisarMuertes();
     }
 
     // Quita de pantalla a los que murieron y si ya ninguno esta, regresa la pantalla 0 tamagotchis
     public String revisarMuertes() {
-        String aviso = "";
-        for (int i = 0; i < mascotas.size(); i++) {
-            Tamagotchi m = mascotas.get(i);
-            if (m.morir()) {
-                aviso = aviso + m.getNombre() + " (" + m.getTipo() + ") ha muerto :(\n";
-            }
-        }
-        mascotas.removeIf(m -> m.morir());
+        String aviso = coleccion.quitarMuertos();
 
-        if (!mascotas.contains(activo)) {
-            if (mascotas.isEmpty()) {
+        if (!coleccion.contiene(activo)) {
+            if (coleccion.estaVacia()) {
                 activo = null;
             } else {
-                activo = mascotas.get(0);
+                activo = coleccion.obtener(0);
             }
         }
-        return aviso.trim();
+        return aviso;
     }
 
     // Modo trampa para cambiar estadisticas de un tamal en especifico
     public String trampa(int posicionTamagotchi, String estadisticas, int valor) {
-        mascotas.get(posicionTamagotchi).ponerStat(estadisticas, valor);
+        coleccion.obtener(posicionTamagotchi).ponerStat(estadisticas, valor);
         String aviso = revisarMuertes();
         if (aviso.isEmpty()) {
             aviso = "Listo, estadística cambiada.";
@@ -186,7 +178,7 @@ public class Controlador {
     private void menuJuego() {
         while (activo != null && !salir) {
             vista.mostrarEstado(activo);
-            int op = vista.mostrarMenuAcciones(activo, mascotas);
+            int op = vista.mostrarMenuAcciones(activo, coleccion);
             boolean pasaTiempo = false;   // true si la acción gasta un turno
 
             switch (op) {
@@ -224,7 +216,7 @@ public class Controlador {
                     break;
                 case 7:
                     int posicionTamagotchi = vista.elegirDeLista("Cual tamagotchi quieres usar?", nombresMascotas());
-                    if (posicionTamagotchi >= 1 && posicionTamagotchi <= mascotas.size()) {
+                    if (posicionTamagotchi >= 1 && posicionTamagotchi <= coleccion.tamano()) {
                         setActivo(posicionTamagotchi - 1);
                     }
                     break;
@@ -233,6 +225,9 @@ public class Controlador {
                     break;
                 case 9:
                     modoTrampa();
+                    break;
+                case 10:
+                    vista.mostrarDatos(coleccion.listaJuguetes());
                     break;
                 case 0:
                     salir = true;
@@ -252,11 +247,11 @@ public class Controlador {
 
     // Modo trampa en la terminal: elegir tamagotchi, estadística y valor
     private void modoTrampa() {
-        int m = vista.elegirDeLista("MODO TRAMPA ---> ¿a cuál tamagotchi?", nombresMascotas());
-        if (m < 1 || m > mascotas.size()) {
+        int m = vista.elegirDeLista("MODO TRAMPA ---> a cual tamagotchi?", nombresMascotas());
+        if (m < 1 || m > coleccion.tamano()) {
             return;
         }
-        String[] estadisticas = mascotas.get(m - 1).getNombresStats();
+        String[] estadisticas = coleccion.obtener(m - 1).getNombresStats();
         int s = vista.elegirDeLista("Que estadistica quieres cambiar? (nota: en enojo 100 = furioso, en las demás 100 = bien)", estadisticas);
         if (s < 1 || s > estadisticas.length) {
             return;
@@ -267,9 +262,9 @@ public class Controlador {
 
     // Lista con "Nombre (Tipo)" de cada tamagotchi que aparece en pantalla
     private String[] nombresMascotas() {
-        String[] lista = new String[mascotas.size()];
+        String[] lista = new String[coleccion.tamano()];
         for (int i = 0; i < lista.length; i++) {
-            lista[i] = mascotas.get(i).getNombre() + " (" + mascotas.get(i).getTipo() + ")";
+            lista[i] = coleccion.obtener(i).getNombre() + " (" + coleccion.obtener(i).getTipo() + ")";
         }
         return lista;
     }

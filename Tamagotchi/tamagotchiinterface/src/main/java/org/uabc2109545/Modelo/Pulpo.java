@@ -213,10 +213,10 @@ public class Pulpo extends Tamagotchi {
         return nombre + " cambia de colores muy contento.";
     }
 
-    // Agrega tinta y camuflaje al estado
+    // toString que suma lo de la clase padre con lo de la clase hija
     @Override
-    public String getEstado() {
-        return super.getEstado() + "\n"
+    public String toString() {
+        return super.toString() + "\n"
                 + "Ganas de lanzar tinta: " + nivel(tinta) + "\n"
                 + "Ganas de camuflarse: " + nivel(camuflaje);
     }

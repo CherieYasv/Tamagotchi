@@ -1,8 +1,8 @@
 package org.uabc2109545.Vista;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.uabc2109545.Modelo.Coleccion;
 import org.uabc2109545.Modelo.Tamagotchi;
 
 // Vista de terminal solo muestra cosas y lee lo que escribe el usuario
@@ -54,14 +54,14 @@ public class VistaConsola {
     public void mostrarEstado(Tamagotchi t) {
         System.out.println();
         System.out.println("------------------------------------");
-        System.out.println(t.getEstado());
+        System.out.println(t.toString());
         System.out.println("Ánimo: " + t.getAnimo());
         System.out.println();
         System.out.println("Mensaje: " + t.getMensaje());
     }
 
     // Menú de acciones del tamagotchi activo y abajo aparecen todos los tamagotchis disponibles
-    public int mostrarMenuAcciones(Tamagotchi activo, ArrayList<Tamagotchi> mascotas) {
+    public int mostrarMenuAcciones(Tamagotchi activo, Coleccion coleccion) {
         String[] especiales = activo.getAcciones();
 
         System.out.println();
@@ -75,8 +75,8 @@ public class VistaConsola {
 
         System.out.println();
         System.out.println("---- Tus tamagotchis (> es el que estás usando) ----");
-        for (int i = 0; i < mascotas.size(); i++) {
-            Tamagotchi m = mascotas.get(i);
+        for (int i = 0; i < coleccion.tamano(); i++) {
+            Tamagotchi m = coleccion.obtener(i);
             String marca = "   ";
             if (m == activo) {
                 marca = " > ";
@@ -86,6 +86,7 @@ public class VistaConsola {
         System.out.println("7. Cambiar de tamagotchi");
         System.out.println("8. Crear otro tamagotchi");
         System.out.println("9. Modo trampa");
+        System.out.println("10. Ver todos mis tamagotchis (detalle)");
         System.out.println("0. Salir");
         return leerNumeros("Elige una opción:");
     }
