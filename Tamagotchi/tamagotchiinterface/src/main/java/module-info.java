@@ -1,7 +1,6 @@
 module com.example {
     requires javafx.controls;
-    requires javafx.fxml;
 
-    opens com.example to javafx.fxml;
-    exports org.uabc2109545.Modelo;
+    opens org.uabc2109545.Vista to javafx.graphics;
+    exports org.uabc2109545.Vista;
 }
