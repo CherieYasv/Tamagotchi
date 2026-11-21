@@ -55,7 +55,7 @@ public class VistaConsola {
         System.out.println();
         System.out.println("------------------------------------");
         System.out.println(t.toString());
-        System.out.println("Ánimo: " + t.getAnimo());
+        System.out.println("Animo: " + t.getAnimo());
         System.out.println();
         System.out.println("Mensaje: " + t.getMensaje());
     }
@@ -86,7 +86,7 @@ public class VistaConsola {
         System.out.println("7. Cambiar de tamagotchi");
         System.out.println("8. Crear otro tamagotchi");
         System.out.println("9. Modo trampa");
-        System.out.println("10. Ver todos mis tamagotchis (detalle)");
+        System.out.println("10. Ver todos mis tamagotchis");
         System.out.println("0. Salir");
         return leerNumeros("Elige una opción:");
     }

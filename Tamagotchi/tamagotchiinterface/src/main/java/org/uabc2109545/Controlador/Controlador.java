@@ -44,7 +44,7 @@ public class Controlador {
     public boolean crearTamagotchi(int tipo, String nombre) {
         String nombreFinal = nombre.trim();
         if (nombreFinal.isEmpty()) {
-            nombreFinal = "Sin nombre";
+            nombreFinal = "Daisy";
         }
 
         Tamagotchi nuevo;

@@ -136,7 +136,7 @@ public abstract class Tamagotchi implements TamagotchiActions {
     // Muere cuando el promedio de sus estadísticas llega a 0
     @Override
     public boolean morir() {
-        return salud <= 0;
+        return salud <= 0 || hambre == 0 || energia == 0;
     }
 
     // toString con lo que todos los tamagotchis tienen. Las subclases agregan lo suyo

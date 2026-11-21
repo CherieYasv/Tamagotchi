@@ -50,7 +50,7 @@ public class VistaFX extends Application {
 
         HBox filaCrear = new HBox(8, new Label("Nuevo:"), campoNombre, botonDragon, botonSerpiente, botonPulpo);
         filaCrear.setAlignment(Pos.CENTER_LEFT);
-        VBox arriba = new VBox(8, filaCrear, new Label("Tus tamagotchis (elige con cuál jugar):"), listaMascotas);
+        VBox arriba = new VBox(8, filaCrear, new Label("Tus tamagotchis:"), listaMascotas);
         arriba.setPadding(new Insets(10));
 
         //Mensaje del centro con el estado de los tamagotchis
@@ -113,7 +113,7 @@ public class VistaFX extends Application {
     private void crear(int tipo) {
         controlador.crearTamagotchi(tipo, campoNombre.getText());
         campoNombre.clear();
-        burbuja.setText("¡Hola! Soy " + controlador.getActivo().getNombre());
+        burbuja.setText("Hola! Soy " + controlador.getActivo().getNombre());
         refrescar();
     }
 
